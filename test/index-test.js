@@ -39,12 +39,12 @@ describe('BandInput component', () => {
       test = 1
     }
 
-    const wrapper = shallow(<BandInput addBand={addBand}/>)
+    const wrapper = shallow(<BandInput addBand={addBand} />)
     let input = wrapper.find('input').first()
     let form = wrapper.find('form')
     expect(test).to.eql(0)
     input.simulate('change', { target: { value: 'Hello' } })
-    form.simulate('submit',  { preventDefault() {} })
+    form.simulate('submit', { preventDefault() { } })
     expect(test).to.eql(1)
   })
 
@@ -60,7 +60,7 @@ describe('BandInput component', () => {
     let form = wrapper.find('form')
 
     input.simulate('change', { target: { value: 'Hello' } })
-    form.simulate('submit',  { preventDefault() {} })
+    form.simulate('submit', { preventDefault() { } })
 
     expect(spy.calledOnce).to.equal(true);
 
@@ -84,8 +84,8 @@ describe('Redux', () => {
     expect(store.getState().bands, "Initial state of 'bands' should be an empty array").to.be.empty
 
     input.simulate('change', { target: { value: 'Hello' } })
-    form.simulate('submit',  { preventDefault() {} })
-
+    form.simulate('submit', { preventDefault() { } })
+    console.log("STORE --- " + store.getState())
     expect(store.getState().bands[0].name).to.equal("Hello")
 
   });
@@ -114,20 +114,20 @@ describe('Bands Container', () => {
     expect(store.getState().bands, "Initial state of 'bands' should be an empty array").to.be.empty
 
     input.simulate('change', { target: { value: 'Flight 909' } })
-    form.simulate('submit',  { preventDefault() {} })
+    form.simulate('submit', { preventDefault() { } })
     input.simulate('change', { target: { value: 'Gwar' } })
-    form.simulate('submit',  { preventDefault() {} })
+    form.simulate('submit', { preventDefault() { } })
 
     expect(store.getState().bands.length, "There are " + store.getState().bands.length + " bands in the store, but " + wrapper.find('li').length + "li elements").to.equal(wrapper.find('li').length)
 
   });
 
   it('renders each li with the correct name', () => {
-      const store = createStore(manageBand)
-      sinon.stub(store, 'getState').returns({bands: [{ name: 'The Black Keys' }, { name: 'The White Stripes' }, { name: 'Black Moth Super Rainbow' }]});
-      const wrapper = mount(<Provider store={store}><App /></Provider>)
-      expect(wrapper.text()).to.contain('The Black Keys');
-      expect(wrapper.text()).to.contain('The White Stripes');
-      expect(wrapper.text()).to.contain('Black Moth Super Rainbow');
+    const store = createStore(manageBand)
+    sinon.stub(store, 'getState').returns({ bands: [{ name: 'The Black Keys' }, { name: 'The White Stripes' }, { name: 'Black Moth Super Rainbow' }] });
+    const wrapper = mount(<Provider store={store}><App /></Provider>)
+    expect(wrapper.text()).to.contain('The Black Keys');
+    expect(wrapper.text()).to.contain('The White Stripes');
+    expect(wrapper.text()).to.contain('Black Moth Super Rainbow');
   });
 })
